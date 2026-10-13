@@ -1,6 +1,6 @@
 import axios from 'axios'
 // All server calls go through this client. Base URL comes from VITE_API_URL (see .env.example).
-export const api = axios.create({ baseURL: (import.meta.env.VITE_API_URL ?? 'http://localhost:8081') + '/api' })
+export const api = axios.create({ baseURL: (import.meta.env.VITE_API_URL ?? 'const API_BASE_URL = "https://YOUR-BACKEND-NAME.onrender.com";') + '/api' })
 api.interceptors.request.use(c => { const t = localStorage.getItem('token'); if (t) c.headers.Authorization = `Bearer ${t}`; return c })
 api.interceptors.response.use(r => r, e => {
   if (e.response?.status === 401 && !String(e.config?.url).startsWith('/auth')) { localStorage.removeItem('token'); window.location.href = '/login' }
